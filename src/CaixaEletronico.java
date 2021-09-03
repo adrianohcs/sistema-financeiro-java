@@ -4,25 +4,28 @@ public class CaixaEletronico {
 
     public Cliente autenticar(String numeroConta) {
         Cliente cliente = new Cliente();
-        cliente.setNome("Fulano");
-        cliente.setSobrenome("de Tal");
+        cliente.setNome("John");
+        cliente.setSobrenome("Doe");
 
-        ContaCorrente contaCorrente = new ContaCorrente(cliente, numeroConta);
+        ContaCorrente contaCorrente = new ContaCorrente(cliente);
+
         this.conta = contaCorrente;
-
+        System.out.println("Bem vindo, "+cliente.getNome());
         return cliente;
     }
 
     public void exibirSaldo() {
         if (this.conta == null) {
-            System.out.println("Autentique-se primeiro.");
-        } else System.out.println("O seu saldo é: " + this.conta.consultarSaldo());
+            System.out.println("IDENTIFIQUE-SE");
+        } else System.out.println("O seu saldo é: R$" + this.conta.consultarSaldo());
     }
 
     public void efetuarSaque(double valor) {
-        this.conta.sacar(valor);
-        System.out.println("Saque efetuado com sucesso!");
-        System.out.println("O seu saldo é: "+this.conta.consultarSaldo());
+        if (this.conta.consultarSaldo() >= valor) {
+            this.conta.sacar(valor);
+            System.out.println("Saque efetuado com sucesso!");
+            System.out.println("O seu saldo é: "+this.conta.consultarSaldo());
+        } else System.out.println("TRANSAÇÃO NÃO AUTORIZADA");
     }
 
     public void efetuarDeposito(double valor) {
@@ -31,7 +34,7 @@ public class CaixaEletronico {
         System.out.println("O seu saldo é: "+this.conta.consultarSaldo());
     }
 
-    public void encerrarUtilizacao() {
-
+    public void encerrar() {
+        this.conta = null;
     }
 }
